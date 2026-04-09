@@ -5,18 +5,26 @@ const winnerStatus = document.getElementById('status');      // Element to displ
 const resetBtn = document.getElementById('resetBtn');        // Reset button
 
 // Game state variables
-let board = [[['','',''],['','',''],['','','']],[['','',''],[],[]],[[],[],[]]];            // Array representing the game board (empty initially)
-
-let currentPlayer = 'X';                                     // Current player ('X' starts)
+let board = [[['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']],
+             [['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']],
+             [['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']]];            // Array representing the game board (empty initially)
 
 let gameActive = true;                                       // Flag to control game flow
 
 
 function createBoard() {
-    for (let i = 0; i < 9; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell');
-        cell.id = i;
+    for (let i = 0; i < board.length; i++) {
+         for (let j = 0, i < board[i].length; j++){
+            for (let k = 0; k < board[i][j].length; k++) {
+               const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.setid = i;
+                cell.xid = (k%3)
+
+                
+            };
+         }   
+    }    
 
         /*                                                                                                                                                                                                                                                                        
         
@@ -27,7 +35,10 @@ function createBoard() {
 
         */
 
-        cell.addEventListener('click',handleCellClick);
+        cell.addEventListener('click',handleCellClick){
+
+
+        };
 
         /* 
         
@@ -37,16 +48,11 @@ function createBoard() {
 
         */
 
-        cell.addEventListener('mouseover',highlightAvailableMoves);
+        cell.addEventListener('mouseover',highlightAvailableMoves){
 
-        /* 
+        }
+
         
-            !!! TODO !!!
-
-            Task 3: For each cell, attach an event listener for 'mouseout' to call 'clearHighlights'                                                                                                                                                                                                                         
-
-
-        */
 
         cell.addEventListener('mouseout',clearHighlights);
 
@@ -60,10 +66,6 @@ function createBoard() {
 
 function handleCellClick(event) {
     const cellId = event.target.id;
-
-    if (currentPlayer === 'O') {
-        return;
-    }
 
     handleMove(cellId); // Reuse the logic for handling a move
 
@@ -99,7 +101,7 @@ function computerMove() {
 
 function handleMove(cellId) {
     // Ensure valid move and game is active
-    if (board[cellId] !== '' || !gameActive) {
+    if (board[cellId] !== '0' || !gameActive) {
         return;
     };
 
