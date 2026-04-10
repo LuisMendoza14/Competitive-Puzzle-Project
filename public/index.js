@@ -14,14 +14,18 @@ let gameActive = true;                                       // Flag to control 
 
 function createBoard() {
     for (let i = 0; i < board.length; i++) {
-         for (let j = 0, i < board[i].length; j++){
+         for (let j = 0; j < board[i].length; j++){
             for (let k = 0; k < board[i][j].length; k++) {
                const cell = document.createElement('div');
                 cell.classList.add('cell');
-                cell.setid = i;
-                cell.xid = (k%3)
+                cell.id = i;
+                //cell.setid = i;
+                //cell.xid = (k%3)
 
-                
+                cell.addEventListener('click',handleCellClick)
+                cell.addEventListener('mouseover',highlightAvailableMoves)
+                cell.addEventListener('mouseout',clearHighlights);
+                gameboard.appendChild(cell);
             };
          }   
     }    
@@ -35,10 +39,7 @@ function createBoard() {
 
         */
 
-        cell.addEventListener('click',handleCellClick){
-
-
-        };
+        
 
         /* 
         
@@ -48,25 +49,19 @@ function createBoard() {
 
         */
 
-        cell.addEventListener('mouseover',highlightAvailableMoves){
-
-        }
-
         
 
-        cell.addEventListener('mouseout',clearHighlights);
 
-
-        gameboard.appendChild(cell);
+        
         
 
-    };
+    
 };
 
 
 function handleCellClick(event) {
     const cellId = event.target.id;
-
+    console.log(cellId)
     handleMove(cellId); // Reuse the logic for handling a move
 
     // Clear highlights after the player's move
@@ -96,8 +91,6 @@ function computerMove() {
 
     handleMove(cellId); // Reuse the logic for handling a move
 };
-
-/
 
 function handleMove(cellId) {
     // Ensure valid move and game is active
@@ -138,8 +131,7 @@ function handleMove(cellId) {
 };
 
 
-function highlightAvailableMoves() {
-    if (currentPlayer !== 'X' || !gameActive) return; // Only highlight during player's turn
+function highlightAvailableMoves() { // Only highlight during player's turn
 
     const availableCells = board.reduce((acc, cell, index) => {
         if (cell === '') acc.push(index);
@@ -150,6 +142,7 @@ function highlightAvailableMoves() {
         const cell = document.getElementById(cellId);
         cell.classList.add('potential-move');
     });
+
 };
 
 function clearHighlights() {
