@@ -1,60 +1,76 @@
-const gameboard = document.getElementById('gameboard');     // The game board container
-
+const gameboard = document.getElementById('container');     // The game board container
+const outerTable = document.createElement('table');
 const winnerStatus = document.getElementById('status');      // Element to display game status/winner
 
 const resetBtn = document.getElementById('resetBtn');        // Reset button
 
-// Game state variables
-let board = [[['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']],
-             [['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']],
-             [['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']]];            // Array representing the game board (empty initially)
+const arr = [
+    [[9, 8, 1], [9, 8, 1], [9, 8, 1]], // Board 0
+    [[1, 2, 3], [4, 5, 6], [7, 8, 9]], // Board 1
+    [[9, 8, 1], [9, 8, 1], [9, 8, 1]], // Board 2
+    [[9, 8, 1], [9, 8, 1], [9, 8, 1]], // Board 3
+    [[9, 8, 1], [9, 8, 1], [9, 8, 1]], // Board 4
+    [[9, 8, 1], [9, 8, 1], [9, 8, 1]], // Board 5
+    [[9, 8, 1], [9, 8, 1], [9, 8, 1]], // Board 6
+    [[9, 8, 1], [9, 8, 1], [9, 8, 1]], // Board 7
+    [[9, 8, 1], [9, 8, 1], [9, 8, 1]]  // Board 8
+];
+
+/*
+// 3D Array Board
+let board = [[[['','',''],['','',''],['','','']],[['','',''],['','',''],['','','']],[['','',''],['','',''],['','','']]],
+             [[['','',''],['','',''],['','','']],[['','',''],['','',''],['','','']],[['','',''],['','',''],['','','']]],
+             [[['','',''],['','',''],['','','']],[['','',''],['','',''],['','','']],[['','',''],['','',''],['','','']]]];            // Array representing the game board (empty initially)
+*/
+
+/*
+// 2D Array Board
+let board = [['','','','','','','','',''],
+             ['','','','','','','','',''],
+             ['','','','','','','','',''],
+             ['','','','','','','','',''],
+             ['','','','','','','','',''],
+             ['','','','','','','','',''],
+             ['','','','','','','','',''],
+             ['','','','','','','','',''],
+             ['','','','','','','','','']];            // Array representing the game board (empty initially)
+*/
 
 let gameActive = true;                                       // Flag to control game flow
 
 
 function createBoard() {
-    for (let i = 0; i < board.length; i++) {
-         for (let j = 0; j < board[i].length; j++){
-            for (let k = 0; k < board[i][j].length; k++) {
-               const cell = document.createElement('div');
-                cell.classList.add('cell');
-                cell.id = i;
-                //cell.setid = i;
-                //cell.xid = (k%3)
+
+    for (let i = 0; i < 3; i++) { 
+    const outerRow = document.createElement('tr');
+    
+    for (let j = 0; j < 3; j++) {
+        
+        const boardContainerCell = document.createElement('td');
+        const innerTable = document.createElement('table');
+        innerTable.className = "sudoku-board";
+
+        for (let k = 0; k < 3; k++) { 
+            const innerRow = document.createElement('tr');
+            
+            for (let h = 0; h < 3; h++) { 
+                const cell = document.createElement('td');
+                const value = arr[j][k][h];
+                cell.textContent = value !== 0 ? value : "";
+                innerRow.appendChild(cell);
 
                 cell.addEventListener('click',handleCellClick)
                 cell.addEventListener('mouseover',highlightAvailableMoves)
                 cell.addEventListener('mouseout',clearHighlights);
-                gameboard.appendChild(cell);
-            };
-         }   
-    }    
-
-        /*                                                                                                                                                                                                                                                                        
-        
-            !!! TODO !!!
-
-            Task 1: For each cell created here, attach an event listener for 'click' to call the "handleCellClick" function
-
-
-        */
-
-        
-
-        /* 
-        
-            !!! TODO !!!
-
-            Task 2: For each cell, attach an event listener for 'mouseover' to call 'highlightAvailableMoves'                                                                                                                                                                                                                 
-
-        */
-
-        
-
-
-        
-        
-
+            }
+                innerTable.appendChild(innerRow);
+            }
+            boardContainerCell.appendChild(innerTable);
+            outerRow.appendChild(boardContainerCell);
+        }
+        outerTable.appendChild(outerRow);
+    }
+    gameboard.appendChild(outerTable);
     
 };
 
