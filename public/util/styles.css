@@ -10,6 +10,21 @@ body {
 h1 {
     text-align: center;
 }
+.mega-grid td {
+        padding: 10px;
+    }
+
+    .sudoku-board {
+        border-collapse: collapse;
+        border: 2px solid black;
+    }
+
+    .sudoku-board td {
+        border: 1px solid gray;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+    }
 
 .tic-tac-toe {
     display: flex;
