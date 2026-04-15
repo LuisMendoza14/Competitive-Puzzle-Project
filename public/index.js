@@ -152,7 +152,18 @@ function sudokuGenerator(k) {
     return grid;
 }
 
+function setValue() {
+    
+    const newValue = document.getElementById("userInput").value;
+  
+    // 2. Select the target table cell
+    const targetCell = document.getElementById("myTableCell");
+  
+    // 3. Set the cell's content to the input value
+    targetCell.textContent = newValue;
 
+    return document.getElementById("myTableCell"); 
+}
 
 
 // i = outer row of blocks (0-2)
@@ -182,7 +193,7 @@ function paintBoard (grid) {
                     const value = grid[absoluteRow][absoluteCol];
                     
                     cell.textContent = value !== 0 ? value : "";
-                    cell.addEventListener('click', addValue());
+                    cell.addEventListener('click', setValue());
                     innerRow.appendChild(cell);
                 }
                 innerTable.appendChild(innerRow);
