@@ -182,6 +182,7 @@ function paintBoard (grid) {
                     const value = grid[absoluteRow][absoluteCol];
                     
                     cell.textContent = value !== 0 ? value : "";
+                    cell.addEventListener('click', addValue());
                     innerRow.appendChild(cell);
                 }
                 innerTable.appendChild(innerRow);
