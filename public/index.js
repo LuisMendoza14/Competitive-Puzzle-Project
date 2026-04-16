@@ -3,6 +3,11 @@ const outerTable = document.createElement('table');
 outerTable.className = "mega-grid";
 const winnerStatus =  document.getElementById('status')
 
+
+// GEt all td elements by the class name "cell"
+// Withe the array of elements return this way, I need to map over them and determin if they are in the came row and column
+// If the element is in the same row and colunn, I will apply a css styling to it
+
 let k = 20;
 
 // JavaScript program to generate a valid sudoku 
@@ -152,7 +157,9 @@ function sudokuGenerator(k) {
     return grid;
 }
 
-
+function setValue() {
+    
+}
 
 
 // i = outer row of blocks (0-2)
@@ -181,8 +188,11 @@ function paintBoard (grid) {
                     // Fetch the correct value using the calculated global indices
                     const value = grid[absoluteRow][absoluteCol];
                     
+                    cell.id = (absoluteRow).toString() + "," + (absoluteCol).toString()
+                    cell.classList.add("sudoku_cell") 
                     cell.textContent = value !== 0 ? value : "";
-                    cell.addEventListener('click', addValue());
+                    cell.addEventListener('click', setValue());
+                    // cell.addEventListener('hover', highlight());
                     innerRow.appendChild(cell);
                 }
                 innerTable.appendChild(innerRow);
@@ -249,7 +259,7 @@ function handleMove(cellId) {
 
     } else if (board.every(cell => cell !== '')) {
 
-        winnerStatus.textContent = "It's a draw!";
+        winnerStatus.textContent = "Winner!";
         gameActive = false;
 
     } else {
@@ -268,20 +278,12 @@ function handleMove(cellId) {
     };
 };
 
-
-function highlightAvailableMoves() { // Only highlight during player's turn
-
-    const availableCells = board.reduce((acc, cell, index) => {
-        if (cell === '') acc.push(index);
-        return acc;
-    }, []);
-
-    availableCells.forEach(cellId => {
-        const cell = document.getElementById(cellId);
-        cell.classList.add('potential-move');
-    });
+/*
+function highlight() { 
+    cell.format.fill.color = '90D5FF'
 
 };
+*/
 
 function clearHighlights() {
 
