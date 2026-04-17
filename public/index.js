@@ -2,9 +2,14 @@ const gameboard = document.getElementById('container');
 const outerTable = document.createElement('table');
 outerTable.className = "mega-grid";
 const winnerStatus =  document.getElementById('status')
+let grid = new Array(9).fill(0).map(() => new Array(9).fill(0));
+let rowArr = new Array(9).fill().map(() => new Array().fill());
+let colArr = new Array(9).fill().map(() => new Array().fill());
 
+console.log(rowArr)
+console.log(colArr)
 
-// GEt all td elements by the class name "cell"
+// Get all td elements by the class name "cell"
 // Withe the array of elements return this way, I need to map over them and determin if they are in the came row and column
 // If the element is in the same row and colunn, I will apply a css styling to it
 
@@ -141,9 +146,6 @@ function removeKDigits(grid, k) {
 
 // Generate a Sudoku grid with K empty cells
 function sudokuGenerator(k) {
-    
-    // Initialize an empty 9x9 grid
-    let grid = new Array(9).fill(0).map(() => new Array(9).fill(0));
 
     // Fill the diagonal 3x3 matrices
     fillDiagonal(grid);
@@ -161,6 +163,19 @@ function setValue() {
     
 }
 
+function highlight() {
+    let idsplit = cell.id.split(',');
+    let row = idsplit[0];
+    let col = idsplit[j];
+    rowCells = rowArr[j];
+    colCells = colArr[h];
+
+    for(a = 0; a < rowCells.length; k++){
+        for(b = 0; b < colCells; b++){
+            cell.
+        }
+    }
+}
 
 // i = outer row of blocks (0-2)
 function paintBoard (grid) {
@@ -192,7 +207,11 @@ function paintBoard (grid) {
                     cell.classList.add("sudoku_cell") 
                     cell.textContent = value !== 0 ? value : "";
                     cell.addEventListener('click', setValue());
-                    // cell.addEventListener('hover', highlight());
+                    cell.addEventListener('hover', highlight());
+
+                    rowArr[absoluteRow].push(cell)
+                    colArr[absoluteCol].push(cell)
+
                     innerRow.appendChild(cell);
                 }
                 innerTable.appendChild(innerRow);
@@ -278,12 +297,7 @@ function handleMove(cellId) {
     };
 };
 
-/*
-function highlight() { 
-    cell.format.fill.color = '90D5FF'
 
-};
-*/
 
 function clearHighlights() {
 
