@@ -161,6 +161,7 @@ function sudokuGenerator(k) {
 
 function setValue() {
     
+<<<<<<< HEAD
 }
 
 function highlight() {
@@ -169,6 +170,18 @@ function highlight() {
     let col = idsplit[j];
     rowCells = rowArr[j];
     colCells = colArr[h];
+=======
+    const newValue = document.getElementById("userInput").value;
+  
+    // 2. Select the target table cell
+    const targetCell = document.getElementById("myTableCell");
+  
+    // 3. Set the cell's content to the input value
+    targetCell.textContent = newValue;
+
+    return document.getElementById("myTableCell"); 
+}
+>>>>>>> 7ffd2b9404f789613e7ebd868349f06032f8a2b3
 
     for(a = 0; a < rowCells.length; k++){
         for(b = 0; b < colCells; b++){
@@ -207,11 +220,14 @@ function paintBoard (grid) {
                     cell.classList.add("sudoku_cell") 
                     cell.textContent = value !== 0 ? value : "";
                     cell.addEventListener('click', setValue());
+<<<<<<< HEAD
                     cell.addEventListener('hover', highlight());
 
                     rowArr[absoluteRow].push(cell)
                     colArr[absoluteCol].push(cell)
 
+=======
+>>>>>>> 7ffd2b9404f789613e7ebd868349f06032f8a2b3
                     innerRow.appendChild(cell);
                 }
                 innerTable.appendChild(innerRow);
