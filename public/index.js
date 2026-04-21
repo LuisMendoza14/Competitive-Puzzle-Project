@@ -159,9 +159,26 @@ function sudokuGenerator(k) {
     return grid;
 }
 
-function setValue() {
+function splitId(id){
+    return id.split(",");
+}
+
+function setValue(ev) {
     
-<<<<<<< HEAD
+    const split_id = splitId(ev.target.id);
+    
+    let newValue = prompt("Enter Value");
+    
+    if (!newValue.match("[1-9]{1}")){
+        return;
+    }
+
+    grid[split_id[0]][split_id[1]] = Number(newValue);
+
+    console.log(grid)
+    
+    ev.target.textContent = newValue;
+
 }
 
 function highlight() {
@@ -170,22 +187,10 @@ function highlight() {
     let col = idsplit[j];
     rowCells = rowArr[j];
     colCells = colArr[h];
-=======
-    const newValue = document.getElementById("userInput").value;
-  
-    // 2. Select the target table cell
-    const targetCell = document.getElementById("myTableCell");
-  
-    // 3. Set the cell's content to the input value
-    targetCell.textContent = newValue;
-
-    return document.getElementById("myTableCell"); 
-}
->>>>>>> 7ffd2b9404f789613e7ebd868349f06032f8a2b3
 
     for(a = 0; a < rowCells.length; k++){
         for(b = 0; b < colCells; b++){
-            cell.
+            cell.setValue();
         }
     }
 }
@@ -218,16 +223,17 @@ function paintBoard (grid) {
                     
                     cell.id = (absoluteRow).toString() + "," + (absoluteCol).toString()
                     cell.classList.add("sudoku_cell") 
-                    cell.textContent = value !== 0 ? value : "";
-                    cell.addEventListener('click', setValue());
-<<<<<<< HEAD
-                    cell.addEventListener('hover', highlight());
+                    if(value !== 0){
+                        cell.textContent = value;
+                    } else {
+                        cell.addEventListener('click', setValue);
+                    }
+
+                    cell.addEventListener('hover', highlight);
 
                     rowArr[absoluteRow].push(cell)
                     colArr[absoluteCol].push(cell)
 
-=======
->>>>>>> 7ffd2b9404f789613e7ebd868349f06032f8a2b3
                     innerRow.appendChild(cell);
                 }
                 innerTable.appendChild(innerRow);
