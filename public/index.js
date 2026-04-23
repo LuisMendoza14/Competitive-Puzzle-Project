@@ -3,6 +3,7 @@ const outerTable = document.createElement('table');
 outerTable.className = "mega-grid";
 const winnerStatus =  document.getElementById('status')
 let grid = new Array(9).fill(0).map(() => new Array(9).fill(0));
+let winGrid = [[]];
 let rowArr = new Array(9).fill().map(() => new Array().fill());
 let colArr = new Array(9).fill().map(() => new Array().fill());
 
@@ -122,6 +123,8 @@ function fillRemaining(grid, i, j) {
 // Remove K digits randomly from the grid
 // This will create a Sudoku puzzle by removing digits
 function removeKDigits(grid, k) {
+    winGrid = grid;
+
     while (k > 0) {
         
         // Pick a random cell
@@ -177,22 +180,13 @@ function setValue(ev) {
 
     console.log(grid)
     
+    ev.target.style.backgroundColor = "90D5FF";
     ev.target.textContent = newValue;
 
 }
 
 function highlight() {
-    let idsplit = cell.id.split(',');
-    let row = idsplit[0];
-    let col = idsplit[j];
-    rowCells = rowArr[j];
-    colCells = colArr[h];
-
-    for(a = 0; a < rowCells.length; k++){
-        for(b = 0; b < colCells; b++){
-            cell.setValue();
-        }
-    }
+    
 }
 
 // i = outer row of blocks (0-2)
@@ -329,31 +323,45 @@ function clearHighlights() {
     cells.forEach(cell => cell.classList.remove('potential-move'));
 };
 
+// function checkRows() {
+
+//     for(let i = 0; i < 9; i++){
+//         for(let j = 0; j < 9; j++){
+
+//         }
+//     }
+// }
+// function checkCols() {
+//     for(let i = 0; i < 9; i++){
+//         for(let j = 0; j < 9; j++){
+            
+//         }
+//     }
+// }
+// function checkGrids() {}
+
 
 function checkWinner() {
-    for (const combination of winningCombinations) {
-        const [a, b, c] = combination;
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
 
-            document.getElementById(a).classList.add('winner');
-            document.getElementById(b).classList.add('winner');
-            document.getElementById(c).classList.add('winner');
-
-            return true;
+    for(i = 0; i < 9; i++){
+        for(j = 0; j < 9; j++){
+            if(grid[i][j] == winGrid[i][j] || grid[i][j] == 0){
+                return false
+            }
         }
     }
-    return false;
+
+    return true;
 }
 
 
 function resetGame() {
-    board = ['', '', '', '', '', '', '', '', ''];
-
-    currentPlayer = 'X';
+    grid.sudokuGenerator();
+    
 
     gameActive = true;
 
-    winnerStatus.textContent = "Player X's turn";
+    winnerStatus.textContent = "No Winner Yet!";
 
     const cells = document.querySelectorAll('.cell');
 
@@ -367,7 +375,7 @@ function resetGame() {
 
 paintBoard(sudokuGenerator(k))
 
-winnerStatus.textContent = "Player X's turn";
+winnerStatus.textContent = "No Winner Yet!";
 
 
 
