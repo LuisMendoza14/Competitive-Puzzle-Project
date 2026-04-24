@@ -3,7 +3,7 @@ const outerTable = document.createElement('table');
 outerTable.className = "mega-grid";
 const winnerStatus =  document.getElementById('status')
 let grid = new Array(9).fill(0).map(() => new Array(9).fill(0));
-let winGrid = [[]];
+let winGrid;
 let rowArr = new Array(9).fill().map(() => new Array().fill());
 let colArr = new Array(9).fill().map(() => new Array().fill());
 
@@ -123,8 +123,7 @@ function fillRemaining(grid, i, j) {
 // Remove K digits randomly from the grid
 // This will create a Sudoku puzzle by removing digits
 function removeKDigits(grid, k) {
-    winGrid = grid;
-
+    winGrid = structuredClone(grid);
     while (k > 0) {
         
         // Pick a random cell
@@ -174,14 +173,25 @@ function setValue(ev) {
     
     if (!newValue.match("[1-9]{1}")){
         return;
+    }    
+    if (newValue == winGrid[split_id[0]][split_id[1]]){
+         grid[split_id[0]][split_id[1]] = Number(newValue);
+
+        console.log(grid)
+        
+        //ev.target.style.backgroundColor = "90D5FF";
+        ev.target.textContent = newValue;
+    
+        
+        if(checkWinner()){
+            alert("Winner!");
+        };
+    } else {
+        alert("Incorrect!");
     }
 
-    grid[split_id[0]][split_id[1]] = Number(newValue);
+   
 
-    console.log(grid)
-    
-    ev.target.style.backgroundColor = "90D5FF";
-    ev.target.textContent = newValue;
 
 }
 
@@ -345,8 +355,8 @@ function checkWinner() {
 
     for(i = 0; i < 9; i++){
         for(j = 0; j < 9; j++){
-            if(grid[i][j] == winGrid[i][j] || grid[i][j] == 0){
-                return false
+            if(grid[i][j] != winGrid[i][j]){
+                return false;
             }
         }
     }
