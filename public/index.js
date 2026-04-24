@@ -185,6 +185,7 @@ function setValue(ev) {
         
         if(checkWinner()){
             alert("Winner!");
+            winnerStatus = "Winner!"
         };
     } else {
         alert("Incorrect!");
@@ -197,6 +198,27 @@ function setValue(ev) {
 
 function highlight() {
     
+}
+
+function clearHighlights() {
+
+    
+    const cells = document.querySelectorAll('.cell');
+
+    cells.forEach(cell => cell.classList.remove('potential-move'));
+};
+
+function checkWinner() {
+
+    for(i = 0; i < 9; i++){
+        for(j = 0; j < 9; j++){
+            if(grid[i][j] != winGrid[i][j]){
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 // i = outer row of blocks (0-2)
@@ -251,134 +273,31 @@ function paintBoard (grid) {
 
 }
 
+/* Originl Check Funtions (unused)
+    function checkRows() {
 
-function handleCellClick(event) {
-    const cellId = event.target.id;
-    console.log(cellId)
-    handleMove(cellId); // Reuse the logic for handling a move
+        for(let i = 0; i < 9; i++){
+            for(let j = 0; j < 9; j++){
 
-    // Clear highlights after the player's move
-    clearHighlights();
-}
-
-/*
- * computerMove function:
- * 
- * This function handles the computer's turn. It randomly selects an
- * available cell and calls the 'handleMove' function to process the move.
- * The 'handleMove' function will then check for a winner, a draw, or 
- * switch the turn back to the player.
- * 
- * 
- */
-function computerMove() {
-
-    let availableCells = board.reduce((acc, cell, index) => {
-        if (cell === '') acc.push(index);
-        return acc;
-    }, []);
-
-    let randomIndex = Math.floor(Math.random() * availableCells.length);
-
-    let cellId = availableCells[randomIndex];
-
-    handleMove(cellId); // Reuse the logic for handling a move
-};
-
-function handleMove(cellId) {
-    // Ensure valid move and game is active
-    if (board[cellId] !== '0' || !gameActive) {
-        return;
-    };
-
-    // Update board and cell display
-    board[cellId] = currentPlayer;
-
-    document.getElementById(cellId).textContent = currentPlayer;
-
-    // Check for win or draw
-    if (checkWinner()) {
-
-        winnerStatus.textContent = 'Player ${currentPlayer} wins!';
-        gameActive = false;
-
-    } else if (board.every(cell => cell !== '')) {
-
-        winnerStatus.textContent = "Winner!";
-        gameActive = false;
-
-    } else {
-
-        // Switch player 
-        currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
-        winnerStatus.textContent = (currentPlayer === 'O') ? "Computer's turn" : `Player ${currentPlayer}'s turn`;
-
-        setTimeout(highlightAvailableMoves, 500);
-
-        // If it's the computer's turn, trigger its move after a delay
-        if (currentPlayer === 'O') {
-            setTimeout(computerMove, 500); 
-        };
-
-    };
-};
-
-
-
-function clearHighlights() {
-
-    
-    const cells = document.querySelectorAll('.cell');
-
-    cells.forEach(cell => cell.classList.remove('potential-move'));
-};
-
-// function checkRows() {
-
-//     for(let i = 0; i < 9; i++){
-//         for(let j = 0; j < 9; j++){
-
-//         }
-//     }
-// }
-// function checkCols() {
-//     for(let i = 0; i < 9; i++){
-//         for(let j = 0; j < 9; j++){
-            
-//         }
-//     }
-// }
-// function checkGrids() {}
-
-
-function checkWinner() {
-
-    for(i = 0; i < 9; i++){
-        for(j = 0; j < 9; j++){
-            if(grid[i][j] != winGrid[i][j]){
-                return false;
             }
         }
     }
-
-    return true;
-}
-
+    function checkCols() {
+        for(let i = 0; i < 9; i++){
+            for(let j = 0; j < 9; j++){
+                
+            }
+        }
+    }
+    function checkGrids() {}
+*/
 
 function resetGame() {
-    grid.sudokuGenerator();
-    
-
-    gameActive = true;
+    paintBoard(sudokuGenerator(k));
 
     winnerStatus.textContent = "No Winner Yet!";
 
     const cells = document.querySelectorAll('.cell');
-
-    cells.forEach(cell => {
-        cell.textContent = '';
-        cell.classList.remove('winner'); 
-    });
 
 };
 
