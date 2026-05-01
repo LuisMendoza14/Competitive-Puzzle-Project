@@ -2,8 +2,10 @@ const gameboard = document.getElementById('container');
 const outerTable = document.createElement('table');
 outerTable.className = "mega-grid";
 const winnerStatus =  document.getElementById('status')
+const diffSelect = document.getElementById('difficulty');
 let grid = new Array(9).fill(0).map(() => new Array(9).fill(0));
 let winGrid;
+let startGrid;
 let rowArr = new Array(9).fill().map(() => new Array().fill());
 let colArr = new Array(9).fill().map(() => new Array().fill());
 
@@ -14,7 +16,9 @@ console.log(colArr)
 // Withe the array of elements return this way, I need to map over them and determin if they are in the came row and column
 // If the element is in the same row and colunn, I will apply a css styling to it
 
-let k = 20;
+let k = 40;
+
+diffSelect.addEventListener('change', setDiffuculty);
 
 // JavaScript program to generate a valid sudoku 
 // with k empty cells
@@ -144,6 +148,7 @@ function removeKDigits(grid, k) {
             k--;
         }
     }
+    startGrid = structuredClone(grid);
 }
 
 // Generate a Sudoku grid with K empty cells
@@ -208,6 +213,12 @@ function clearHighlights() {
     cells.forEach(cell => cell.classList.remove('potential-move'));
 };
 
+function setDiffuculty(e){
+    console.log(e);
+    let newVal = Number(e.target.value);
+    k = newVal;
+}
+
 function checkWinner() {
 
     for(i = 0; i < 9; i++){
@@ -221,8 +232,11 @@ function checkWinner() {
     return true;
 }
 
+
+    
 // i = outer row of blocks (0-2)
 function paintBoard (grid) {
+    
     for (let i = 0; i < 3; i++) { 
         const outerRow = document.createElement('tr');
         
@@ -266,6 +280,10 @@ function paintBoard (grid) {
             }
             boardContainerCell.appendChild(innerTable);
             outerRow.appendChild(boardContainerCell);
+            
+            if(checkWinner()){
+                resetBttn.addEventListener('click', resetGame);
+            }
         }
         outerTable.appendChild(outerRow);
     }
@@ -292,8 +310,8 @@ function paintBoard (grid) {
     function checkGrids() {}
 */
 
-function resetGame() {
-    paintBoard(sudokuGenerator(k));
+function resetGame(e) {
+    paintBoard(sudokuGenerator(e));
 
     winnerStatus.textContent = "No Winner Yet!";
 
